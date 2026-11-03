@@ -135,6 +135,46 @@ function drawArena(ctx) {
   ctx.restore();
 }
 
+function drawMarseilleSupporter(ctx, now) {
+  // The front row sits below the ropes, outside the playable ring.
+  ctx.save();
+  ctx.translate(753, 570);
+
+  // White and sky-blue shirt, scarf and a raised fist.
+  roundedRect(ctx, -18, 8, 36, 28, 7, '#f4fbff');
+  roundedRect(ctx, -7, 8, 6, 28, 2, '#27b5e3');
+  roundedRect(ctx, 6, 8, 5, 28, 2, '#27b5e3');
+  line(ctx, [[-15, 13], [-34, -1], [-40, -11]], '#d7a17b', 8);
+  const cheer = Math.sin(now * 4) * 2;
+  line(ctx, [[16, 13], [29, -1], [28, -25 + cheer]], '#d7a17b', 8);
+  roundedRect(ctx, 23, -31 + cheer, 11, 12, 4, '#e6b38c');
+
+  ellipse(ctx, 0, -8, 12, 13, '#e6b38c');
+  ellipse(ctx, 0, -18, 10, 5, '#392b25');
+  ellipse(ctx, -4, -10, 1.4, 1.5, '#30251f');
+  ellipse(ctx, 4, -10, 1.4, 1.5, '#30251f');
+  ellipse(ctx, 0, -1, 3, 4, '#683d30');
+  line(ctx, [[-13, 7], [0, 12], [13, 7]], '#19a9df', 5);
+  line(ctx, [[9, 10], [14, 24]], '#19a9df', 5);
+
+  // Keep the board bright and large enough to read on a phone.
+  ctx.shadowColor = 'rgba(0,0,0,.5)';
+  ctx.shadowBlur = 10;
+  roundedRect(ctx, -320, -25, 280, 42, 5, '#f2fbff');
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#26b4e1';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(-315, -20, 270, 32);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.letterSpacing = '1px';
+  ctx.font = '900 28px Arial, sans-serif';
+  ctx.fillStyle = '#007faa';
+  ctx.fillText('ALLEZ L’OM', -180, -3);
+  ellipse(ctx, -41, -10, 5, 6, '#e6b38c');
+  ctx.restore();
+}
+
 function drawFighter(ctx, fighter, other, identity, now) {
   const profile = fighter.profile || fighter;
   const skin = skinColor(profile.skin);
@@ -243,6 +283,7 @@ export function drawRing(canvas, bout, options = {}) {
   vignette.addColorStop(1, 'rgba(0,0,0,.37)');
   ctx.fillStyle = vignette;
   ctx.fillRect(0, 0, 1000, 600);
+  drawMarseilleSupporter(ctx, now);
 }
 
 /** Front-facing creation preview, drawn without external assets. */
